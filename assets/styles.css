@@ -464,7 +464,7 @@ input[type="number"] {
 
 .stack-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.85rem;
 }
 
@@ -472,7 +472,7 @@ input[type="number"] {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 176px;
+  min-height: 360px;
   padding: 1rem;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -491,6 +491,13 @@ input[type="number"] {
   font-size: 1.02rem;
 }
 
+.tool-card header small {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--faint);
+  font-size: 0.76rem;
+}
+
 .tool-card p,
 .tool-card small {
   color: var(--muted);
@@ -499,6 +506,51 @@ input[type="number"] {
 .tool-card p {
   margin: 0.7rem 0 1rem;
   font-size: 0.9rem;
+}
+
+.tool-meta {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0 0 1rem;
+}
+
+.tool-meta div {
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr);
+  gap: 0.55rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--line);
+}
+
+.tool-meta dt,
+.tool-meta dd {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.tool-meta dt {
+  color: var(--green-dark);
+  font-weight: 800;
+}
+
+.tool-meta dd {
+  color: var(--muted);
+}
+
+.tool-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  margin-top: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--blue);
+  background: var(--soft-blue);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-decoration: none;
 }
 
 .tag {

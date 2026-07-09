@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OneStack · 一人公司建站成本计算器</title>
+    <meta
+      name="description"
+      content="面向个人测试阶段的一人公司建站工具栈决策站，实时估算 Codex、Vercel、Supabase、域名、邮件、支付、监控和语义搜索成本。"
+    />
+    <meta name="theme-color" content="#f6f8f3" />
+    <meta property="og:title" content="OneStack · 一人公司建站成本计算器" />
+    <meta
+      property="og:description"
+      content="不要再收藏泛泛的工具清单。用真实参数算出个人测试阶段的建站成本、升级风险和 7 天 MVP 路线。"
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <a class="brand" href="#calculator" aria-label="OneStack 首页">
+        <span class="brand-mark">1</span>
+        <span>
+          <strong>OneStack</strong>
+          <small>Solo SaaS Cost Lab</small>
+        </span>
+      </a>
+      <nav class="top-nav" aria-label="主要导航">
+        <a href="#calculator">计算器</a>
+        <a href="#stack">工具栈</a>
+        <a href="#plan">7 天计划</a>
+        <a href="#publish">上线步骤</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="calculator">
+        <div class="hero-copy">
+          <p class="eyebrow">个人测试 / 无商业阶段</p>
+          <h1>把“一人公司几乎 0 成本上线”算清楚。</h1>
+          <p class="lead">
+            这不是工具导航，而是一个决策工具。调整用户量、邮件量、数据库、支付和语义搜索需求，马上看到固定成本、手续费和升级风险。
+          </p>
+          <div class="hero-actions">
+            <a class="primary-action" href="#stack">看推荐工具栈</a>
+            <a class="secondary-action" href="#publish">部署到线上</a>
+          </div>
+        </div>
+
+        <section class="calculator-shell" aria-label="一人公司建站成本计算器">
+          <div class="controls-panel">
+            <div class="panel-heading">
+              <h2>参数</h2>
+              <span class="pill">可调</span>
+            </div>
+
+            <label class="control">
+              <span>
+                <b>Codex / ChatGPT 月费</b>
+                <em id="codexLabel">$20</em>
+              </span>
+              <input id="codexCost" type="range" min="0" max="200" step="5" value="20" />
+            </label>
+
+            <label class="control">
+              <span>
+                <b>预计月活用户</b>
+                <em id="usersLabel">500</em>
+              </span>
+              <input id="users" type="range" min="0" max="60000" step="500" value="500" />
+            </label>
+
+            <label class="control">
+              <span>
+                <b>每月邮件量</b>
+                <em id="emailLabel">500</em>
+              </span>
+              <input id="email" type="range" min="0" max="10000" step="100" value="500" />
+            </label>
+
+            <label class="control">
+              <span>
+                <b>数据库体量</b>
+                <em id="dbLabel">200 MB</em>
+              </span>
+              <input id="db" type="range" min="0" max="5000" step="100" value="200" />
+            </label>
+
+            <div class="toggle-row">
+              <span>
+                <b>接入支付</b>
+                <em>按交易估算 Stripe 手续费</em>
+              </span>
+              <label class="switch">
+                <input id="stripe" type="checkbox" checked />
+                <span></span>
+              </label>
+            </div>
+
+            <div class="toggle-row">
+              <span>
+                <b>语义搜索</b>
+                <em>个人阶段优先 pgvector</em>
+              </span>
+              <label class="switch">
+                <input id="semantic" type="checkbox" />
+                <span></span>
+              </label>
+            </div>
+
+            <label class="control compact">
+              <span>
+                <b>月交易额</b>
+                <em>美元</em>
+              </span>
+              <input id="revenue" type="number" min="0" inputmode="decimal" value="0" />
+            </label>
+          </div>
+
+          <div class="output-panel">
+            <div class="metrics">
+              <article class="metric-card">
+                <span>固定月成本</span>
+                <strong id="fixedCost">$21</strong>
+                <small>Codex 月费 + 域名月摊</small>
+              </article>
+              <article class="metric-card">
+                <span>含手续费成本</span>
+                <strong id="totalCost">$21</strong>
+                <small id="feeText">无交易手续费</small>
+              </article>
+              <article class="metric-card">
+                <span>升级风险</span>
+                <strong id="riskLevel">低</strong>
+                <small id="riskText">适合个人验证</small>
+              </article>
+            </div>
+
+            <div class="risk-board">
+              <h2>当前判断</h2>
+              <ul id="riskList"></ul>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="section" id="stack">
+        <div class="section-copy">
+          <p class="eyebrow">Recommended Stack</p>
+          <h2>个人测试阶段，不要一上来堆满服务。</h2>
+          <p>
+            最小可用组合是 Codex + GitHub + Vercel + Supabase + Cloudflare + Resend。Clerk、Pinecone、复杂监控和付费数据库都应该在需求成立后再补。
+          </p>
+        </div>
+
+        <div class="stack-grid" id="stackGrid"></div>
+      </section>
+
+      <section class="section split" id="plan">
+        <div class="section-copy sticky-copy">
+          <p class="eyebrow">7-Day MVP</p>
+          <h2>验证目录站之前，先验证“决策价值”。</h2>
+          <p>
+            泛目录很容易被复制。第一周的目标不是收录 500 个工具，而是做出 20 个高质量条目、1 个计算器和 3 套可执行方案。
+          </p>
+        </div>
+
+        <ol class="timeline">
+          <li><b>D1</b><span>确定唯一细分场景，例如“独立开发者 SaaS 建站成本”。</span></li>
+          <li><b>D2</b><span>整理 20 个工具条目，字段包含价格、免费额度、商用限制、替代品和坑点。</span></li>
+          <li><b>D3</b><span>上线计算器，先用静态数据和本地 JS 验证页面是否有收藏价值。</span></li>
+          <li><b>D4</b><span>补三套方案：个人测试、商业 MVP、增长阶段。</span></li>
+          <li><b>D5</b><span>接入分析，记录来源、停留、计算器交互和外链点击。</span></li>
+          <li><b>D6</b><span>在 X、即刻、知乎或小红书发布真实成本拆解。</span></li>
+          <li><b>D7</b><span>根据收藏率、私信咨询和外链点击决定是否继续做数据库。</span></li>
+        </ol>
+      </section>
+
+      <section class="section" id="publish">
+        <div class="section-copy">
+          <p class="eyebrow">Online Ready</p>
+          <h2>这个仓库已经按线上静态站准备好。</h2>
+          <p>
+            可以直接部署到 GitHub Pages、Vercel、Netlify 或 Cloudflare Pages。没有构建依赖，入口文件就是根目录的
+            <code>index.html</code>。
+          </p>
+        </div>
+
+        <div class="deploy-grid">
+          <article>
+            <b>GitHub Pages</b>
+            <span>已提供 workflow，推送到 main 后通过 Actions 发布。</span>
+            <code>.github/workflows/pages.yml</code>
+          </article>
+          <article>
+            <b>Vercel</b>
+            <span>导入仓库即可，Build Command 留空，Output Directory 使用根目录。</span>
+            <code>vercel.json</code>
+          </article>
+          <article>
+            <b>Cloudflare Pages</b>
+            <span>Framework preset 选择 None，Build command 留空。</span>
+            <code>/</code>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>OneStack · 价格和限制会变化，请以各服务官网为准。</p>
+      <div>
+        <a href="https://chatgpt.com/pricing/" target="_blank" rel="noreferrer">ChatGPT/Codex</a>
+        <a href="https://supabase.com/pricing" target="_blank" rel="noreferrer">Supabase</a>
+        <a href="https://vercel.com/pricing" target="_blank" rel="noreferrer">Vercel</a>
+        <a href="https://resend.com/pricing" target="_blank" rel="noreferrer">Resend</a>
+        <a href="https://stripe.com/pricing" target="_blank" rel="noreferrer">Stripe</a>
+      </div>
+    </footer>
+
+    <script src="assets/app.js"></script>
+  </body>
+</html>
